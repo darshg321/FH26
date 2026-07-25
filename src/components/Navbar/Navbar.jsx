@@ -6,7 +6,6 @@ import {
 } from "../../hooks/useHorizontalScroll";
 import GlassContainer from "../Recap/RecapComponents/RecapProjects/GlassContainer";
 import NavItem from "./NavItem";
-import RegistrationButton from "./RegistrationButton";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -138,6 +137,7 @@ export default function Navbar() {
               label="Sponsors"
               onClick={() => goToHomeSection(NAV_SECTION_SCROLL_VH.sponsors)}
             />
+            <NavItem label="Gallery" onClick={() => navigate("/gallery")} />
             <NavItem label="Team" onClick={() => navigate("/team")} />
           </div>
 
@@ -181,6 +181,13 @@ export default function Navbar() {
                 label="Sponsors"
                 onClick={() => {
                   goToHomeSection(NAV_SECTION_SCROLL_VH.sponsors);
+                  setMenuOpen(false);
+                }}
+              />
+              <NavItem
+                label="Gallery"
+                onClick={() => {
+                  navigate("/gallery");
                   setMenuOpen(false);
                 }}
               />

@@ -1,6 +1,6 @@
-import RegistrationButton from "../Navbar/RegistrationButton";
+import GalleryButton from "../Gallery/GalleryButton";
 import MinecraftNumbers from "../MinecraftNumbers";
-import { Tooltip } from 'react-tooltip'
+import { EVENT_STATS } from "../../data/eventStats";
 
 export default function TitleMain() {
   return (
@@ -24,43 +24,40 @@ export default function TitleMain() {
         <MinecraftNumbers>FraserHacks26</MinecraftNumbers>
       </h1>
       <div className="text-base md:text-lg lg:text-xl xl:text-2xl mt-2">
+        <div className="inline-flex items-center gap-2 rounded-full border border-fuchsia-400/40 bg-fuchsia-500/10 px-3 py-1 mb-3 text-xs md:text-sm font-black text-fuchsia-100">
+          <span className="h-1.5 w-1.5 rounded-full bg-fuchsia-400" />
+          That's a wrap!
+        </div>
         <div className="flex flex-row">
           <div className="font-black mr-2">Mississauga's largest high school hackathon</div>
         </div>
         <div>
           <MinecraftNumbers>March 26, 2026</MinecraftNumbers> • In-person <MinecraftNumbers>(8am–6pm)</MinecraftNumbers>
         </div>
-        <div className="flex flex-row items-center gap-1.5 mb-5">
+        <div className="flex flex-row items-center gap-1.5 mb-4">
           <img src="/icons/map-pin.png" className="h-[1em] w-[1em]" alt="location"/>
-          <div className="font-black mr-2">John Fraser SS • No fees required</div>
+          <div className="font-black mr-2">John Fraser SS • Thanks to everyone who came out!</div>
+        </div>
+        <div className="flex flex-row flex-wrap items-center gap-x-3 gap-y-1 mb-4 text-sm md:text-base lg:text-lg">
+          {EVENT_STATS.map((stat, index) => (
+            <div key={stat.label} className="flex flex-row items-center gap-x-3">
+              {index > 0 && <span className="opacity-40">•</span>}
+              <div>
+                <MinecraftNumbers className="font-black">{stat.value}</MinecraftNumbers>{" "}
+                <span className="opacity-70">{stat.label.toLowerCase()}</span>
+              </div>
+            </div>
+          ))}
         </div>
         <div className="flex flex-row mb-3 items-center">
-          <RegistrationButton />
-          <div className="font-black ml-3">Due <MinecraftNumbers>Sunday, March 15th, 2026</MinecraftNumbers>!</div>
+          <GalleryButton />
+          <div className="font-black ml-3">Relive the day!</div>
         </div>
         <div className="flex flex-col text-xs md:text-sm lg:text-base xl:text-lg font-normal">
           <a className="flex flex-row gap-1.5 items-center cursor-pointer hover:underline hover:underline-offset-3" target="_blank" href="https://www.instagram.com/fraser.hacks/" rel="noopener noreferrer">
             <img src="/icons/instagram.png" className="h-[1em] w-[1em]" alt="instagram"/>
-            <div>Want to learn more? Check out our Instagram!</div>
+            <div>Want to stay in the loop for next year? Check out our Instagram!</div>
           </a>
-          <span className="relative inline-block w-fit">
-            <span id="tooltip" className="underline decoration-dotted underline-offset-3 inline-block">Are you a non-JFSS student?</span>
-          </span>
-          <Tooltip
-            anchorSelect="#tooltip"
-            place="bottom"
-            style={{
-              maxWidth: '300px',
-              backgroundColor: '#333333',
-              opacity:'0.5',
-              color: '#fff',
-              padding: '10px',
-              borderRadius: '5px',
-              fontSize: '15px',
-              zIndex: '999',
-            }}
-            content="Non-JFSS students MUST be accompanied and supervised by a teacher from their respective school. If you have a teacher who's willing to come and supervise a group of students from your school, ask them to contact hi@fraserhacks.dev or DM us at fraser.hacks for further info!"
-          />
         </div>
       </div>
     </div>

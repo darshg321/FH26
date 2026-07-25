@@ -15,13 +15,19 @@ import RecapText from "./components/Recap/RecapComponents/RecapText/RecapText";
 import RecapProjects from "./components/Recap/RecapComponents/RecapProjects/RecapProjects";
 import Sponsers from "./components/Sponsers/Sponsers";
 import Sponsors3D from "./components/Sponsers/Sponsers3D";
+import Stats from "./components/Stats/Stats";
+import GalleryPreview from "./components/Gallery/GalleryPreview";
 import FAQ from "./components/FAQ/FAQ";
 import Navbar from "./components/Navbar/Navbar";
 import ScrollController from "./components/Navbar/ScrollController";
-import { scrollFromNavbarWhenReady } from "./hooks/useHorizontalScroll";
+import {
+  scrollFromNavbarWhenReady,
+  SCROLL_PAGES,
+} from "./hooks/useHorizontalScroll";
 import Registration from "./pages/registration/Registration";
 import ScannerX7P4N2 from "./pages/scanner/ScannerX7P4N2";
 import TeamPage from "./pages/team/team";
+import GalleryPage from "./pages/gallery/gallery";
 import RegisteredSuccessBanner from "./components/Registration/RegisteredSuccessBanner";
 
 // Lazy load heavy 3D components
@@ -97,7 +103,7 @@ function HomePage() {
         {!isMobile && <MouseLight />}
         {!isMobile && <Background />}
 
-        <ScrollControls pages={7} damping={0.15}>
+        <ScrollControls pages={SCROLL_PAGES} damping={0.15}>
           <ScrollController />
 
           <Scroll>
@@ -140,6 +146,21 @@ function HomePage() {
             >
               <FAQ />
             </section>
+            {/*
+              Sponsors3D occupies the middle of the scroll, so this sits past it on
+              the final page. ScrollControls tops out at (pages - 1) * 100vh, and the
+              four sections above span 400vh — but TitleMain's mt-24/md:mt-32/lg:mt-54
+              collapses out through its section and pushes the whole stack down, so
+              subtract that same amount back off. The extra 30vh below 768px cancels
+              the FAQ section's negative margin.
+            */}
+            <section
+              className="flex flex-col items-center justify-center gap-6 md:gap-8 lg:gap-10 mt-[calc(430vh-96px)] md:mt-[calc(400vh-128px)] lg:mt-[calc(400vh-216px)]"
+              style={{ height: "100vh", width: "100vw" }}
+            >
+              <Stats />
+              <GalleryPreview />
+            </section>
           </Scroll>
         </ScrollControls>
       </Canvas>
@@ -154,6 +175,7 @@ export default function App() {
       <Route path="/registration" element={<Registration />} />
       <Route path="/scanner-x7p4n2" element={<ScannerX7P4N2 />} />
       <Route path="/team" element={<TeamPage />} />
+      <Route path="/gallery" element={<GalleryPage />} />
     </Routes>
   );
 }

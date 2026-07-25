@@ -3,14 +3,32 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useScroll } from "@react-three/drei";
 import { scrollApi } from "../components/Navbar/ScrollController";
 
+/** Total ScrollControls pages. App.jsx passes this to <ScrollControls pages>. */
+export const SCROLL_PAGES = 9;
+
+/**
+ * ScrollControls moves the content by `scrollTop * (pages - 1) / pages`, so a raw
+ * scrollTop lands somewhere different whenever SCROLL_PAGES changes. The constants
+ * below are instead expressed in CONTENT units — 1.0 is one 100vh page of content,
+ * matching where a section actually sits in the layout — and are converted on use.
+ */
+const contentToOffset = (content) => content / (SCROLL_PAGES - 1);
+const contentToScrollVH = (content) =>
+  (content * SCROLL_PAGES * 100) / (SCROLL_PAGES - 1);
+const contentToScrollPx = (content, viewportPx) =>
+  (content * viewportPx * SCROLL_PAGES) / (SCROLL_PAGES - 1);
+
+/** Content position the recap pins itself to while horizontal mode is active. */
+const RECAP_PIN_CONTENT = 2.04;
+
 // Configuration
 const HORIZONTAL_SCROLL_CONFIG = {
   transitionSpeed: 0.05,
   scrollDeltaScale: 0.01,
   recapSection: {
-    start: 0.34,
-    end: 0.35,
-    entryBuffer: 0.08,
+    start: contentToOffset(RECAP_PIN_CONTENT),
+    end: contentToOffset(2.1),
+    entryBuffer: contentToOffset(0.48),
   },
 };
 
@@ -32,12 +50,12 @@ export const subscribeToHorizontalOffset = (callback) => {
 // Flag to indicate Navbar-triggered scroll
 let allowNavbarScroll = false;
 
-// Function for Navbar to trigger scroll
+// Function for Navbar to trigger scroll. Content units, see contentToScrollVH.
 export const NAV_SECTION_SCROLL_VH = {
-  intro: 120,
-  recap: 240,
-  faq: 370,
-  sponsors: 500,
+  intro: contentToScrollVH(1.029),
+  recap: contentToScrollVH(2.057),
+  faq: contentToScrollVH(3.171),
+  sponsors: contentToScrollVH(4.286),
 };
 
 export const scrollFromNavbar = (vh) => {
@@ -279,7 +297,10 @@ export const useHorizontalScroll = () => {
         setIsHorizontalMode(false);
       } else {
         setIsHorizontalMode(true);
-        const target = scroll.el.scrollHeight * 0.3;
+        const target = contentToScrollPx(
+          RECAP_PIN_CONTENT,
+          scroll.el.clientHeight,
+        );
         scroll.el.scrollTo({ top: target, behavior: "instant" });
         scrollDirection.current = null;
       }

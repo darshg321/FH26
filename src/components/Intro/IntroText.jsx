@@ -41,9 +41,9 @@ export default function IntroText() {
           </div>
           <div className="text-gray-300 text-xs md:text-sm lg:text-lg leading-5 md:leading-6">
             FraserHacks is Mississauga's largest high school hackathon organized
-            entirely by students at John Fraser Secondary School. More than{" "}
-            <MinecraftNumbers>100</MinecraftNumbers> students from all of Peel Region will be coming together on March{" "}
-            <MinecraftNumbers>26</MinecraftNumbers>th <MinecraftNumbers>2026</MinecraftNumbers>, for a full{" "}
+            entirely by students at John Fraser Secondary School. On March{" "}
+            <MinecraftNumbers>26</MinecraftNumbers>th <MinecraftNumbers>2026</MinecraftNumbers>,{" "}
+            <MinecraftNumbers>83</MinecraftNumbers> students from all of Peel Region came together for a full{" "}
             <MinecraftNumbers>10</MinecraftNumbers> hours of friendly hacking, enthusiastic
             learning, and delicious food.
           </div>
