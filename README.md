@@ -1,17 +1,23 @@
-<<<<<<< HEAD
-# FH26
-FraserHack26 official website
-=======
-# React + Vite
+# FraserHacks 2026
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+the home of john fraser's 2026 hackathon!
+ran on march 26, 2026 with over 100 people!
 
-Currently, two official plugins are available:
+team:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+co-leads:
+- darsh gupta
+- james lian
 
-## Expanding the ESLint configuration
+assistant directors:
+- rachael lu
+- jia peng
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
->>>>>>> 95d5671 (background and hero)
+tech:
+- jason chou
+
+finance:
+- irene wang
+
+logistics:
+- danny kenneth
