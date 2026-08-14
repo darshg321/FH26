@@ -192,6 +192,13 @@ const sectors = [
         instagramUrl: "https://www.instagram.com/mo_ray2010/",
         roleTier: "member",
       },
+      {
+        name: "Brian Zhao",
+        position: "Member",
+        email: "778247@pdsb.net",
+        instagramUrl: "https://www.instagram.com/brianzha0/",
+        roleTier: "member",
+      }
     ],
   },
   {
