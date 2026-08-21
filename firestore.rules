@@ -1,0 +1,67 @@
+rules_version = '2';
+
+// Deploy with:  firebase deploy --only firestore:rules
+// (or paste into Firebase console > Firestore Database > Rules)
+//
+// Signup emails are private: nothing in here is readable without a signed-in
+// Google account that is either in the bootstrap list below or has a document
+// in /admins. The 2027 interest form is the one public write, and it is
+// shape-checked so it can only ever add a well-formed signup.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Admins that live in this file rather than in /admins, so there is always
+    // a way in even if the collection is empty or someone removes themselves.
+    // Keep in sync with src/data/bootstrapAdmins.js, which only displays them.
+    function isBootstrapAdmin() {
+      return request.auth.token.email.lower() in [
+        'darshg321@gmail.com'
+      ];
+    }
+
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email != null
+        && request.auth.token.email_verified == true
+        && (
+          isBootstrapAdmin()
+          || exists(/databases/$(database)/documents/admins/$(request.auth.token.email.lower()))
+        );
+    }
+
+    // Exactly the five fields the interest modal writes, nothing else.
+    function isValidSignup() {
+      let d = request.resource.data;
+      return d.keys().hasOnly(['fullName', 'email', 'grade', 'school', 'submittedAt'])
+        && d.keys().hasAll(['fullName', 'email', 'grade', 'school', 'submittedAt'])
+        && d.fullName is string && d.fullName.size() > 0 && d.fullName.size() <= 120
+        && d.email is string && d.email.size() <= 200
+        && d.email.matches('[^@ ]+@[^@ ]+[.][^@ ]+')
+        && d.grade in ['9', '10', '11', '12', 'Other']
+        && d.school is string && d.school.size() > 0 && d.school.size() <= 120
+        && d.submittedAt == request.time;
+    }
+
+    // Admin allowlist, managed from /admin. The document ID is the lowercased
+    // Google account email; the body is ignored.
+    match /admins/{email} {
+      allow read, write: if isAdmin();
+    }
+
+    // 2027 interest list. Anyone can add themselves; only admins can see it.
+    // Update is open to a valid signup as well so that someone re-submitting
+    // the same email overwrites their own entry instead of hitting an error —
+    // the document ID is derived from the email, and nobody can read it back.
+    match /interest2027/{signup} {
+      allow read, delete: if isAdmin();
+      allow create, update: if isAdmin() || isValidSignup();
+    }
+
+    // Anything not matched above — including the 2026 registrationsBySchool
+    // collection, which was public until these rules landed — stays closed.
+    // Read that data from the Firebase console.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

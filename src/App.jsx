@@ -28,6 +28,7 @@ import Registration from "./pages/registration/Registration";
 import ScannerX7P4N2 from "./pages/scanner/ScannerX7P4N2";
 import TeamPage from "./pages/team/team";
 import GalleryPage from "./pages/gallery/gallery";
+import Admin from "./pages/admin/Admin";
 import RegisteredSuccessBanner from "./components/Registration/RegisteredSuccessBanner";
 
 // Lazy load heavy 3D components
@@ -125,6 +126,10 @@ function HomePage() {
           <Scroll html>
             <section style={{ height: "100vh", width: "100vw" }}>
               <TitleMain />
+              {/* Left margins match TitleMain's so the strip lines up under the title. */}
+              <div className="mt-3 md:mt-4 ml-8 mr-8 sm:ml-24 sm:mr-24 md:ml-36 md:mr-36 lg:ml-48 lg:mr-48">
+                <GalleryPreview compact />
+              </div>
             </section>
             <section style={{ height: "100vh", width: "100vw" }}>
               <IntroText />
@@ -159,7 +164,6 @@ function HomePage() {
               style={{ height: "100vh", width: "100vw" }}
             >
               <Stats />
-              <GalleryPreview />
             </section>
           </Scroll>
         </ScrollControls>
@@ -176,6 +180,7 @@ export default function App() {
       <Route path="/scanner-x7p4n2" element={<ScannerX7P4N2 />} />
       <Route path="/team" element={<TeamPage />} />
       <Route path="/gallery" element={<GalleryPage />} />
+      <Route path="/admin" element={<Admin />} />
     </Routes>
   );
 }

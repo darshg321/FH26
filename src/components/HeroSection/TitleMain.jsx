@@ -1,4 +1,5 @@
 import GalleryButton from "../Gallery/GalleryButton";
+import InterestButton2027 from "../Interest/InterestButton2027";
 import MinecraftNumbers from "../MinecraftNumbers";
 import { EVENT_STATS } from "../../data/eventStats";
 
@@ -49,9 +50,11 @@ export default function TitleMain() {
             </div>
           ))}
         </div>
-        <div className="flex flex-row mb-3 items-center">
+        <div className="flex flex-row flex-wrap items-center gap-x-4 gap-y-3 mb-3 mt-5">
+          <InterestButton2027 />
+          <span className="hidden sm:block h-10 w-px bg-white/25" />
           <GalleryButton />
-          <div className="font-black ml-3">Relive the day!</div>
+          <div className="font-black">Relive the day!</div>
         </div>
         <div className="flex flex-col text-xs md:text-sm lg:text-base xl:text-lg font-normal">
           <a className="flex flex-row gap-1.5 items-center cursor-pointer hover:underline hover:underline-offset-3" target="_blank" href="https://www.instagram.com/fraser.hacks/" rel="noopener noreferrer">
